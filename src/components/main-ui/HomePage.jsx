@@ -50,7 +50,7 @@ function HomePage(props) {
   const handleUserJoined = (data) => {
     const room = data["room"];
     const username = window.localStorage.getItem("username");
-    console.log(data.users)
+    console.log(data)
     navigate('/room/' + room, { 
       "state" : {
         "username" : username,

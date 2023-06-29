@@ -58,22 +58,7 @@ export default function Room(props) {
   const [newRoom, setNewRoom] = useState(false); // whether you are creating a new room
 
   // not working 
-  const [enableNewLines, setEnableNewLines] = useState(true); // whether or not you want to use new lines in the code 
-
-  const init = () => {
-    if (enableNewLines) {
-      setWords(location.state.code_block.split(' ').filter((word) => word.length > 0));
-    } else {
-      const textNoNewLines = location.state.code_block.replace(/\\n/g," ");
-      setWords(textNoNewLines.split(" ").filter((word) => word.length > 0));
-      setText(textNoNewLines);
-    }
-    setUserType("");
-    setNumSpaces(0);
-    location.state.users.forEach((username) => {
-      setOpponentsType((prev) => [...prev, { username : username, code : ""}]);
-    })
-  }
+  const [enableNewLines, setEnableNewLines] = useState(false); // whether or not you want to use new lines in the code 
 
   useEffect(() => {
     socket.on('join', handleJoin); // other people joining
@@ -87,7 +72,19 @@ export default function Room(props) {
     //   nagviate("/");
     // };
     
-    init();
+    if (enableNewLines) {
+      setWords(location.state.code_block.split(' ').filter((word) => word.length > 0));
+    } else {
+      const textNoNewLines = location.state.code_block.replace(/\\n/g," ");
+      setWords(textNoNewLines.split(" ").filter((word) => word.length > 0));
+      setText(textNoNewLines);
+      console.log(textNoNewLines);  
+    }
+    setUserType("");
+    setNumSpaces(0);
+    location.state.users.forEach((username) => {
+      setOpponentsType((prev) => [...prev, { username : username, code : ""}]);
+    })
 
     return () => {
       const username = location.state.username;

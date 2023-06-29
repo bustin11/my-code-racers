@@ -16,6 +16,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 def generate_code_block():
     code_block = random.choice(db.session.query(CodeBlocks).order_by(func.random()).limit(100).all())
+    print(code_block.text)
     return code_block.text
 
 @socketio.on('join')
